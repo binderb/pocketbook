@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --dark: 68, 68, 68;
+  --primary: 59, 157, 0;
+  --primaryhighlight: 72, 193, 0;
+  --secondary: 120, 120, 120;
+  --secondaryhighlight: 140, 140, 140;
+  --secondarylight: 204, 204, 204;
+}
+
+.primary-button {
+  @apply rounded-lg bg-primary text-white px-3 py-2 hover:bg-primaryhighlight duration-200
+}
+
+.std-input {
+  @apply rounded-lg p-2 bg-white/20 border border-secondary
+}
