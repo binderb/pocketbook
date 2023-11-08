@@ -3,6 +3,7 @@
 # app
 pocketbase/*
 !pb_migrations
+.env.local
 
 # dependencies
 /node_modules

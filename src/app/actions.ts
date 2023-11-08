@@ -3,7 +3,7 @@ import pb from "@/lib/pocketbase";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import * as csv from 'csv/sync';
+// import * as csv from 'csv/sync';
 
 export async function logout () {
   cookies().delete('pb_auth');
@@ -12,19 +12,20 @@ export async function logout () {
 
 export async function insert (formData:FormData) {
   try {
-    const file = formData.get('file') as File;
-    const fileContents = await file.text();
-    const data = csv.parse(fileContents);
+    console.log('test action successful.');
+    // const file = formData.get('file') as File;
+    // const fileContents = await file.text();
+    // const data = csv.parse(fileContents);
 
-    const filetype = formData.get('filetype') as string;
-    let entriesToAdd = [];
-    if (filetype === 'amex') {
-      entriesToAdd = data.map((row:string[])=> ({
-        date: row[0],
-      }));
-    }
+    // const filetype = formData.get('filetype') as string;
+    // let entriesToAdd = [];
+    // if (filetype === 'amex') {
+    //   entriesToAdd = data.map((row:string[])=> ({
+    //     date: row[0],
+    //   }));
+    // }
 
-    console.log(entriesToAdd);
+    // console.log(entriesToAdd);
 
     // const fileContents = fs.readFileSync(file,);
 
