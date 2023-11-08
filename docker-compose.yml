@@ -1,11 +1,11 @@
 services:
   pocketbook:
-    image: pocketbook:0.1.0
+    image: binderlab/pocketbook:0.1.0
     ports:
       - 3001:3000
     environment:
       - NEXT_PUBLIC_PB_URL=http://pocketbase:8080
   pocketbase:
-    image: pocketbase:0.19.3
+    image: binderlab/pocketbase:0.19.3
     ports:
       - 8080:8080
