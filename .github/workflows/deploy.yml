@@ -37,11 +37,14 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Run Docker-Compose on Production Server
-        uses: astappiev/docker-compose-remote-action@master
+      - name: Start Deployment
+        uses: TapTap21/docker-remote-deployment-action@v1.0
         with:
-          ssh_host: ${{ secrets.DEPLOY_HOST }}
-          ssh_user: ${{ secrets.DEPLOY_USERNAME }}
+          remote_docker_host: ${{ secrets.DEPLOY_HOST }}
           ssh_private_key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          ssh_host_public_key: ${{ secrets.DEPLOY_PUBLIC_KEY }}
-          docker_compose_prefix: pocketbook
+          ssh_public_key: ${{ secrets.DEPLOY_PUBLIC_KEY }}
+          stack_file_name: docker-compose.yml
+          docker_login_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          docker_login_user: ${{ secrets.DOCKERHUB_USERNAME }}
+          docker_login_registry : ${{ steps.login-action.outputs.registry }}
+          args: -p pocketbook up -d
