@@ -36,4 +36,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-  
+
+      - name: Run Docker-Compose on Production Server
+        uses: astappiev/docker-compose-remote-action@master
+        with:
+          ssh_host: ${{ secrets.DEPLOY_HOST }}
+          ssh_user: ${{ secrets.DEPLOY_USERNAME }}
+          ssh_private_key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          ssh_host_public_key: ${{ secrets.DEPLOY_PUBLIC_KEY }}
+          docker_compose_prefix: pocketbook
