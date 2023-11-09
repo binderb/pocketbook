@@ -3,7 +3,7 @@ name: Deploy Docker Compose
 on: workflow_dispatch
 
 jobs:
-  build_image_and_push:
+  compose:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,4 +23,6 @@ jobs:
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           passphrase: ${{ secrets.DEPLOY_PASSPHRASE }}
-          script: whoami
+          script: |
+            cd /var/www/docker
+            docker compose -f pocketbook.yml up -d
