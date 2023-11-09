@@ -1,12 +1,6 @@
-name: Build and Deploy
+name: Full Deploy
 
-on: 
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
+on: workflow_dispatch
 
 jobs:
   build_image_and_push:
@@ -37,14 +31,13 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Start Deployment
-        uses: TapTap21/docker-remote-deployment-action@v1.0
+      - name: Run docker compose on production server
+        uses: appleboy/ssh-action@v1.0.0
         with:
-          remote_docker_host: ${{ secrets.DEPLOY_HOST }}
-          ssh_private_key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          ssh_public_key: ${{ secrets.DEPLOY_PUBLIC_KEY }}
-          stack_file_name: docker-compose.yml
-          docker_login_password: ${{ secrets.DOCKERHUB_TOKEN }}
-          docker_login_user: ${{ secrets.DOCKERHUB_USERNAME }}
-          docker_login_registry : ${{ steps.login-action.outputs.registry }}
-          args: -p pocketbook up -d
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          passphrase: ${{ secrets.DEPLOY_PASSPHRASE }}
+          script: |
+            cd /var/www/docker
+            docker compose -f pocketbook.yml up -d
