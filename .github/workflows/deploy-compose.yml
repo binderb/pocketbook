@@ -22,4 +22,5 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          passphrase: ${{ secrets.DEPLOY_PASSPHRASE }}
           script: whoami
