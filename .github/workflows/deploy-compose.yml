@@ -1,9 +1,9 @@
-name: Full Deploy
+name: Deploy Docker Compose
 
 on: workflow_dispatch
 
 jobs:
-  build_image_and_push:
+  compose:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,23 +15,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: binderlab/pocketbook
-      
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile.web
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Run docker compose on production server
+      - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.DEPLOY_HOST }}
