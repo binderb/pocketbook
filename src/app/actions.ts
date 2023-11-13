@@ -3,6 +3,7 @@ import pb, { authenticate } from "@/lib/pocketbase";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 // import * as csv from 'csv/sync';
 
 const sleep = (delay:number) => new Promise((resolve) => setTimeout(resolve, delay))
@@ -13,15 +14,11 @@ export async function login (formData:FormData) {
     const {record, token} = result;
     record.token = token;
     console.log('token: ',token);
-    cookies().set('pb_auth', pb.authStore.exportToCookie(), {
-      httpOnly: false,
-      sameSite: 'none',
-    });
+    cookies().set('pb_auth', pb.authStore.exportToCookie());
+    return 'success';
   } catch (err:any) {
     console.log(JSON.stringify(err));
   }
-  // revalidatePath('/login');
-  redirect('/');
 }
 
 export async function logout () {

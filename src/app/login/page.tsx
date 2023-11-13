@@ -1,10 +1,18 @@
+'use client';
 import { revalidatePath } from "next/cache";
 import { cookies } from 'next/headers';
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { login } from "../actions";
 
 
-export default async function Login () {
+export default function Login () {
+  const router = useRouter();
+
+  async function handleLogin (formData:FormData) {
+    const result = await login(formData);
+    console.log(result);
+    router.push('/');
+  }
 
   return (
     <>
@@ -13,7 +21,7 @@ export default async function Login () {
         <div className='text-dark text-[32px] font-bold'>Pocketbook</div>
         <div className='font-light text-[24px]'>Login</div>
       </div>
-      <form action={login} className='flex flex-col gap-2 bg-white/40 rounded-xl border border-secondary p-4 text-dark'>
+      <form action={handleLogin} className='flex flex-col gap-2 bg-white/40 rounded-xl border border-secondary p-4 text-dark'>
         <div className='flex items-center justify-between gap-2'>
           <div className='font-bold'>Username:</div>
           <input name='username' type='text' className='std-input w-[60%]' />
