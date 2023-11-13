@@ -1,4 +1,5 @@
 import pb, { authenticate } from "@/lib/pocketbase";
+import { revalidatePath } from "next/cache";
 import { cookies } from 'next/headers';
 import { redirect } from "next/navigation";
 
@@ -15,6 +16,7 @@ export default async function Login () {
     } catch (err:any) {
       console.log(JSON.stringify(err));
     }
+    revalidatePath('/');
     redirect('/');
   }
 
