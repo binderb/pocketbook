@@ -1,28 +1,14 @@
-import pb, { authenticate } from "@/lib/pocketbase";
 import { revalidatePath } from "next/cache";
 import { cookies } from 'next/headers';
 import { redirect } from "next/navigation";
+import { login } from "../actions";
 
 
 export default async function Login () {
 
-  async function login (formData:FormData) {
-    'use server';
-    try {
-      const result = await authenticate(formData.get('username') as string,formData.get('password') as string);
-      const {record, token} = result;
-      record.token = token;
-      cookies().set('pb_auth', pb.authStore.exportToCookie());
-    } catch (err:any) {
-      console.log(JSON.stringify(err));
-    }
-    revalidatePath('/');
-    redirect('/');
-  }
-
   return (
     <>
-      <section id='contact' className={`w-full h-screen bg-secondarylight bg-fixed bg-cover bg-center bg-[url('/images/studio.webp')] flex flex-col items-center gap-6 pt-12 pb-12`}>
+      <section id='contact' className={`w-full h-screen bg-secondarylight flex flex-col items-center gap-6 pt-12 pb-12`}>
       <div className='flex flex-col gap-2 items-center'>
         <div className='text-dark text-[32px] font-bold'>Pocketbook</div>
         <div className='font-light text-[24px]'>Login</div>

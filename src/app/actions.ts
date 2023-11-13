@@ -1,9 +1,25 @@
 'use server';
-import pb from "@/lib/pocketbase";
+import pb, { authenticate } from "@/lib/pocketbase";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 // import * as csv from 'csv/sync';
+
+const sleep = (delay:number) => new Promise((resolve) => setTimeout(resolve, delay))
+
+export async function login (formData:FormData) {
+  try {
+    const result = await authenticate(formData.get('username') as string,formData.get('password') as string);
+    const {record, token} = result;
+    record.token = token;
+    cookies().set('pb_auth', pb.authStore.exportToCookie());
+    await sleep(1000);
+  } catch (err:any) {
+    console.log(JSON.stringify(err));
+  }
+  // revalidatePath('/login');
+  redirect('/login');
+}
 
 export async function logout () {
   cookies().delete('pb_auth');
