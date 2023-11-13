@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import {isAuthenticated} from "./lib/pocketbase";
 
 export async function middleware(req:NextRequest) {
-  console.log(`attempting route to ${req.nextUrl.pathname}, ${req.method}...`)
+  console.log(`attempting route to ${req.nextUrl.pathname}, ${req.method}...`);
+  console.log('with cookies: ', req.cookies);
   const isLoggedIn = await isAuthenticated(req.cookies as any);
   if (req.nextUrl.pathname && req.nextUrl.pathname.startsWith('/login')) {
     if (isLoggedIn) {
