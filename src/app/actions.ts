@@ -12,8 +12,8 @@ export async function login (formData:FormData) {
     const result = await authenticate(formData.get('username') as string,formData.get('password') as string);
     const {record, token} = result;
     record.token = token;
+    console.log('token: ',token);
     cookies().set('pb_auth', pb.authStore.exportToCookie());
-    await sleep(1000);
   } catch (err:any) {
     console.log(JSON.stringify(err));
   }
