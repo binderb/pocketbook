@@ -40,4 +40,5 @@ jobs:
           passphrase: ${{ secrets.DEPLOY_PASSPHRASE }}
           script: |
             cd /var/www/docker
+            docker compose -f pocketbook.yml pull
             docker compose -f pocketbook.yml up -d
