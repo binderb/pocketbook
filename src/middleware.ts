@@ -6,12 +6,14 @@ export async function middleware(req:NextRequest) {
   const isLoggedIn = await isAuthenticated(req.cookies as any);
   if (req.nextUrl.pathname && req.nextUrl.pathname.startsWith('/login')) {
     if (isLoggedIn) {
+      console.log('user cookies show that they are logged in.');
       console.log('url:',new URL('/',req.url));
       return NextResponse.redirect(new URL('/',req.url));
     }
     return;
   }
   if (!isLoggedIn) {
+    console.log('user cookies show that they are NOT logged in. Redirecting...');
     return NextResponse.redirect(new URL('/login',req.url));
   }
   
