@@ -18,7 +18,7 @@ export async function login (formData:FormData) {
     console.log(JSON.stringify(err));
   }
   // revalidatePath('/login');
-  redirect('/login');
+  redirect('/');
 }
 
 export async function logout () {
