@@ -13,7 +13,10 @@ export async function login (formData:FormData) {
     const {record, token} = result;
     record.token = token;
     console.log('token: ',token);
-    cookies().set('pb_auth', pb.authStore.exportToCookie());
+    cookies().set('pb_auth', pb.authStore.exportToCookie(), {
+      httpOnly: false,
+      sameSite: 'none',
+    });
   } catch (err:any) {
     console.log(JSON.stringify(err));
   }
