@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         dark: 'rgba(var(--dark), <alpha-value>)',
+        light: 'rgba(var(--light), <alpha-value>)',
         primary: 'rgba(var(--primary), <alpha-value>)',
         primaryhighlight: 'rgba(var(--primaryhighlight), <alpha-value>)',
         secondary: 'rgba(var(--secondary), <alpha-value>)',

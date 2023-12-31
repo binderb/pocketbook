@@ -1,9 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Open_Sans } from 'next/font/google'
 import './globals.css'
-import Nav from './components/Nav'
+import Nav from './(global components)/Nav'
 
-const inter = Inter({ subsets: ['latin'] })
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  weight: ['300','400','700'],
+  variable: '--opensans',
+})
 
 export const metadata: Metadata = {
   title: 'Pocketbook',
@@ -17,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${openSans.variable} bg-dark text-light`}>
         {children}
       </body>
     </html>
